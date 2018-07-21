@@ -1,4 +1,5 @@
 
+
 class Architecture:
 
     # must be a power of 2
@@ -18,4 +19,5 @@ class Architecture:
 
     # dropouts for generator decoder
     # length must match the number of layers in generator decoder
-    dropouts = [0.5, 0.5, 0.5, 0.0, 0.0, 0.0]
+    # last value must be 0.0, as the last layer should not have dropout
+    dropouts = [0.5, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0]

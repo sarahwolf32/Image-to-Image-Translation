@@ -126,11 +126,10 @@ class Generator:
                 kernel_initializer=initializer)
 
             # droput
-            if not last_layer:
-                layer = tf.nn.dropout(layer, keep_prob = 1 - dropout)
+            layer = tf.nn.dropout(layer, keep_prob = 1 - dropout)
             
             # tanh activation function (last layer only)
-            else:
+            if last_layer:
                 layer = tf.tanh(layer)
 
             # save layer
