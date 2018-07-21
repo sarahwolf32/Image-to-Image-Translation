@@ -15,3 +15,7 @@ class Architecture:
         # (max_channel_multiplier * num_input_channels) in the encoder
         # (2 * max_channel_multiplier * num_input_channels) in the decoder
     max_channel_multiplier = 8 
+
+    # dropouts for generator decoder
+    # length must match the number of layers in generator decoder
+    dropouts = [0.5, 0.5, 0.5, 0.0, 0.0, 0.0]

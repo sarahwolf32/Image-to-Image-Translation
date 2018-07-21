@@ -106,7 +106,7 @@ class Generator:
             img_size = img_size * 2
             skip_layer_index = len(encoder_layers) - len(decoder_layers) - 1
             num_channels = encoder_layer_channels[skip_layer_index]
-            dropout = 0.5
+            dropout = A.dropouts[len(decoder_layers)]
 
             # concatenate skip connection layer
             if not first_layer:
