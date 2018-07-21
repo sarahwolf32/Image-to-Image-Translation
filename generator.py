@@ -14,8 +14,10 @@ class Generator:
         '''
 
         with tf.variable_scope('generator'):
-            layers = self.encoder(images)
-            #....
+            encoder_layers, encoder_layer_channels = self.encoder(images)
+            decoder_layers = self.decoder(encoder_layers.encoder_layer_channels)
+            output = decoder_layers[-1]
+            return output
 
 
     def encoder(self, images):
@@ -23,13 +25,17 @@ class Generator:
         The first half of the generator.
         Reduces each image to a vector capturing its high-level features.
 
-        @images: A set of images normalized to [-1, 1], with shape [batch_size, img_size, img_size, input_channels]
+        @images: Tensor - A set of images normalized to [-1, 1], with shape [batch_size, img_size, img_size, input_channels]
         @returns: 
-            A list of all encoder layers. 
-            The last layer is a [batch_size, 1, 1, num_channels] encoding of the input image.
+            @layers:
+                A list of all encoder layers. 
+                The last layer is a [batch_size, 1, 1, num_channels] encoding of the input image.
+            @layer_channels
+                A list of the number of channels in each layer's output activation
         '''
 
         layers = []
+        layer_channels = []
         initializer = tf.truncated_normal_initializer(stddev=0.02)
 
         # layer size: [batch, img_size, img_size, num_channels]
@@ -62,42 +68,82 @@ class Generator:
             if not first_layer:
                 layer = tf.layers.batch_normalization(layer)
 
-            # leaky relu
+            # leaky relu activation function
             if not last_layer:
                 layer = tf.nn.leaky_relu(layer)
 
             # save layer
             layers.append(layer)
+            layers.append(num_channels)
 
-        return layers
+        return (layers, layer_channels)
 
+
+    def decoder(self, encoder_layers, encoder_layer_channels):
+        '''
+        The second half of the generator.
+        Expands the encoder's final, smallest layer of shape [batch, 1, 1, num_channels] into the output image.
+        Also uses skip connections from all the encoder's layers.
+
+        @encoder_layers: [layer] - List of all encoder layers
+        @encoder_layer_channels: [Int] - List of number of channels in each encoder layer
+        @returns: [layer] - A list of all decoder layers
+        '''
+
+        decoder_layers = []
+        initializer = tf.truncated_normal_initializer(stddev=0.02)
+
+        img_size = 1
+        layer = encoder_layers[-1]
+
+        while img_size < A.img_size:
+
+            # determine if first or last layer, as they are structured a bit differently
+            first_layer = (img_size == 1)
+            last_layer = (img_size == A.img_size / 2)
+
+            # update specs for layer
+            img_size = img_size * 2
+            skip_layer_index = len(encoder_layers) - len(decoder_layers) - 1
+            num_channels = encoder_layer_channels[skip_layer_index]
+            dropout = 0.5
+
+            # concatenate skip connection layer
+            if not first_layer:
+                skip_layer = encoder_layers[skip_layer_index]
+                layer = tf.concat([layer, skip_layer], axis=3)
+
+            # relu activation function
+            layer = tf.nn.relu(layer)
+
+            # deconv
+            layer = tf.layers.conv2d_transpose(
+                layer,
+                filters = num_channels,
+                kernel_size = 4,
+                strides = [2,2],
+                padding = "same",
+                kernel_initializer=initializer)
+
+            # droput
+            if not last_layer:
+                layer = tf.nn.dropout(layer, keep_prob = 1 - dropout)
+            
+            # tanh activation function (last layer only)
+            else:
+                layer = tf.tanh(layer)
+
+            # save layer
+            decoder_layers.append(layer)
+
+        return decoder_layers
 
             
 
-            
-            
-            
 
-            
 
-        # decoder
-            # if first decoder layer:
-                # input = previous_layer
-            # else:
-                # input = previous_layer + skip_connection_layer, concatenated on channels axis
-            # All but the last decoder layer consists of:
-                # 1. get input
-                # 2. relu
-                # 3. deconv
-                # 4. dropout
-            # The last layer consists of:
-                # 1. get input
-                # 2. relu
-                # 3. deconv
-                # 4. tanh
-            # Img_size should double each layer, until output size is reached
-            # num_channels output should mirror encoder
-            # return last layer
+
+        
             
 
 
