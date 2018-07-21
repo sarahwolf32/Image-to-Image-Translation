@@ -15,7 +15,7 @@ class Generator:
 
         with tf.variable_scope('generator'):
             encoder_layers, encoder_layer_channels = self.encoder(images)
-            decoder_layers = self.decoder(encoder_layers.encoder_layer_channels)
+            decoder_layers = self.decoder(encoder_layers, encoder_layer_channels)
             output = decoder_layers[-1]
             return output
 
@@ -53,8 +53,8 @@ class Generator:
             # update dimensions for layer
             img_size = img_size / 2
             if num_channels < max_channels:
-                num_channels * 2
-
+                num_channels = num_channels * 2
+            
             # conv
             layer = tf.layers.conv2d(
                 layer, 
@@ -74,7 +74,7 @@ class Generator:
 
             # save layer
             layers.append(layer)
-            layers.append(num_channels)
+            layer_channels.append(num_channels)
 
         return (layers, layer_channels)
 
@@ -105,7 +105,7 @@ class Generator:
             # update specs for layer
             img_size = img_size * 2
             skip_layer_index = len(encoder_layers) - len(decoder_layers) - 1
-            num_channels = encoder_layer_channels[skip_layer_index]
+            num_channels = A.output_channels if last_layer else encoder_layer_channels[skip_layer_index]
             dropout = A.dropouts[len(decoder_layers)]
 
             # concatenate skip connection layer

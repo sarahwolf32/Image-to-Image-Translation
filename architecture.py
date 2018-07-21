@@ -7,7 +7,7 @@ class Architecture:
     # assumes images are square
     img_size = 256 
 
-    input_channels = 3
+    input_channels = 1
     output_channels = 3
 
     # must be a power of 2
