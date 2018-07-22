@@ -24,3 +24,7 @@ class Architecture:
 
     # base size for the discriminator filter
     discriminator_filter_size = 64
+
+    # generator loss
+    weight_gan_loss = 1.0
+    weight_L1_loss = 100.0

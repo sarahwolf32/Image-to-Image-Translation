@@ -12,7 +12,7 @@ class Discriminator():
             - each entry Xij comes from a 70x70 region of the input 
         @input_images: A set of image tensors, of shape [batch_size, img_size, img_size, input_channels] 
         @output_images: A set of image tensors, of shape [batch_size, img_size, img_size, output_channels]
-        @returns: [batch_size, 30, 30, 1]
+        @returns: [batch_size, 30, 30, 1] with all values in range [0,1]
         '''
 
         with tf.variable_scope('discriminator', reuse=resuse):
