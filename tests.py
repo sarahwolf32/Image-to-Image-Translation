@@ -22,7 +22,7 @@ class Tests(unittest.TestCase):
         images = tf.random_uniform(input_shape, minval = -1, maxval = 1)
         
         # get output from G
-        output = G.generate(images)
+        output = G.create(images)
 
         # confirm output shape is as expected
         expected_output_shape = [batch_size, A.img_size, A.img_size, A.output_channels]

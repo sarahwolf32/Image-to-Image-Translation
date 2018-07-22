@@ -4,7 +4,7 @@ from architecture import Architecture as A
 
 class Generator:
 
-    def generate(self, images):
+    def create(self, images):
         '''
         Generates fake images based off the input images.
         Uses a "U-net" architecture, an encoder-decoder with skip connections
@@ -14,13 +14,13 @@ class Generator:
         '''
 
         with tf.variable_scope('generator'):
-            encoder_layers, encoder_layer_channels = self.encoder(images)
-            decoder_layers = self.decoder(encoder_layers, encoder_layer_channels)
+            encoder_layers, encoder_layer_channels = self._encoder(images)
+            decoder_layers = self._decoder(encoder_layers, encoder_layer_channels)
             output = decoder_layers[-1]
             return output
 
 
-    def encoder(self, images):
+    def _encoder(self, images):
         '''
         The first half of the generator.
         Reduces each image to a vector capturing its high-level features.
@@ -79,7 +79,7 @@ class Generator:
         return (layers, layer_channels)
 
 
-    def decoder(self, encoder_layers, encoder_layer_channels):
+    def _decoder(self, encoder_layers, encoder_layer_channels):
         '''
         The second half of the generator.
         Expands the encoder's final, smallest layer of shape [batch, 1, 1, num_channels] into the output image.
