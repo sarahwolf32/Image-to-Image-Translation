@@ -9,6 +9,7 @@ class Discriminator():
         Computes the probability that the given image patch is real.
         @generated_y: Images syntesized from the discriminator, from real input images.
         @y: Ground truth output images.
+        @returns: [batch_size, 30, 30, 1]
         '''
 
         # concatenate the channels of the generated and ground truth output images

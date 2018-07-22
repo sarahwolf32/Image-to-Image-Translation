@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 from architecture import Architecture as A
 from generator import Generator
+from discriminator import Discriminator
 
 class Tests(unittest.TestCase):
 
@@ -26,6 +27,23 @@ class Tests(unittest.TestCase):
         # confirm output shape is as expected
         expected_output_shape = [batch_size, A.img_size, A.img_size, A.output_channels]
         self.assertEqual(output.shape, expected_output_shape, msg='generator should output tensor of size [batch_size, img_size, img_size, output_channels]')
+
+    def test_discriminator(self):
+        D = Discriminator()
+
+        # create two fake tensors of shape [batch_size, img_size, img_size, output_channels]
+        batch_size = 128
+        output_shape = [batch_size, A.img_size, A.img_size, A.output_channels]
+        generated_y = tf.random_uniform(output_shape, minval = -1, maxval = 1)
+        y = tf.random_uniform(output_shape, minval = -1, maxval = 1)
+
+        # get output from D
+        output = D.prob_real(generated_y, y)
+
+        # confirm output shape has one channel
+        self.assertEqual(output.shape[3], 1)
+
+
 
 
 
