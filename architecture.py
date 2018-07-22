@@ -21,3 +21,6 @@ class Architecture:
     # length must match the number of layers in generator decoder
     # last value must be 0.0, as the last layer should not have dropout
     dropouts = [0.5, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+    # base size for the discriminator filter
+    discriminator_filter_size = 64
