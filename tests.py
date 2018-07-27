@@ -4,6 +4,7 @@ import tensorflow as tf
 from architecture import Architecture as A
 from generator import Generator
 from discriminator import Discriminator 
+from data_loader import DataLoader
 
 class Tests(unittest.TestCase):
 
@@ -42,6 +43,27 @@ class Tests(unittest.TestCase):
 
         # confirm output shape has one channel
         self.assertEqual(output.shape[3], 1)
+
+    def test_dataset(self):
+        images_dir = 'flower-sketches'
+        batch_size = 10
+        h = 256
+        w = 512
+        channels = 3
+
+        # create dataset
+        D = DataLoader(images_dir, batch_size)
+        dataset = D._load_images()
+        iterator = dataset.make_one_shot_iterator()
+        next_batch = iterator.get_next()
+
+        # test in session
+        with tf.Session() as sess:
+            images = sess.run(next_batch)
+            self.assertEqual(images.shape, (batch_size, h, w, channels))
+
+
+
 
 
 
