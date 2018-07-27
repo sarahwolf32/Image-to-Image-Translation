@@ -44,6 +44,7 @@ def train(config):
                     feed_dict = {ops.x_images_holder: x_images, ops.y_images_holder: y_images}
                     sess.run([ops.train_g, ops.train_d], feed_dict=feed_dict)
                     logger.log(feed_dict)
+                    logger.checkpoint(feed_dict)
                     sess.run(tf.assign_add(ops.global_step, 1))
                     
                 except tf.errors.OutOfRangeError:
@@ -60,11 +61,17 @@ if __name__=='__main__':
 
     # unwrap config
     parser = argparse.ArgumentParser()
+
+    # filepaths
     parser.add_argument('--data-dir', default='flower-sketches')
+    parser.add_argument('--summary-dir', default='summary')
+    parser.add_argument('--checkpoint-dir', default='checkpoints')
+
+    # training settings
     parser.add_argument('--num-epochs', type=int, default=5)
     parser.add_argument('--batch-size', type=int, default=10)
-    parser.add_argument('--summary-dir', default='summary')
     parser.add_argument('--log-freq', type=int, default=1)
+    parser.add_argument('--checkpoint-freq', type=int, default=1)
     config = parser.parse_args()
 
     # train
