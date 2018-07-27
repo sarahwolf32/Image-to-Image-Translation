@@ -40,6 +40,8 @@ class Model:
         loss_d_summary_op = tf.summary.scalar('Discriminator_Loss', loss_d)
         loss_g_summary_op = tf.summary.scalar('Generator_Loss', loss_g)
         images_summary_op = tf.summary.image('Generated_Image', generated_images, max_outputs=1)
+        x_summary_op = tf.summary.image('X_Image', x_images_holder, max_outputs=1)
+        y_summary_op = tf.summary.image('Y_Image', y_images_holder, max_outputs=1)
         summary_op = tf.summary.merge_all()
 
     def _create_training_counters(self):

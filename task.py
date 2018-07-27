@@ -28,14 +28,15 @@ def train(config):
 
         # loop through epochs
         while epoch < config.num_epochs:
-            iterator = dataset.make_one_shot_iterator()     
+            iterator = dataset.make_one_shot_iterator()  
+            batch_var = iterator.get_next()   
 
             # loop through batches
             while True:
                 try: 
 
                     # get mini-batch 
-                    batch = sess.run(iterator.get_next())
+                    batch = sess.run(batch_var)
                     x_images = batch[:, :, :A.img_size, :]
                     y_images = batch[:, :, A.img_size:, :]
                     

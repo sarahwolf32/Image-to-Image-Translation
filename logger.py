@@ -1,4 +1,5 @@
 import tensorflow as tf
+from architecture import Architecture as A
 
 class Logger:
 
@@ -9,6 +10,8 @@ class Logger:
         self.ops = ops
 
     def log(self, feed_dict):
+
+        # write tensorboard summary
         global_step = self.sess.run(self.ops.global_step)
         if global_step % self.config.log_freq == 0:
             summary = self.sess.run(self.ops.summary, feed_dict=feed_dict)
@@ -19,3 +22,8 @@ class Logger:
         print("step: " + str(global_step))
         print("loss_g: " + str(loss_g))
         print("loss_d: " + str(loss_d))
+
+
+
+
+

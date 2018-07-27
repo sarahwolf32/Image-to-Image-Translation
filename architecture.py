@@ -27,4 +27,4 @@ class Architecture:
 
     # generator loss
     weight_gan_loss = 1.0
-    weight_L1_loss = 100.0
+    weight_L1_loss = 1.0
