@@ -2,10 +2,14 @@ import tensorflow as tf
 import numpy as np
 from architecture import Architecture as A
 from generator import Generator 
+from discriminator import Discriminator
 
 class Model:
 
-    def trainers(self):
+    def __init__(self):
+        self._create()
+
+    def _create(self):
 
         # placeholders for training data
         x_images_holder = tf.placeholder(tf.float32, shape=[None, A.img_size, A.img_size, A.input_channels])
@@ -31,8 +35,6 @@ class Model:
         train_g = optimizer_g.minimize(loss_g, var_list=g_vars, name='train_g')
         train_d = optimizer_d.minimize(loss_d, var_list=d_vars, name='train_d')
 
-        return train_d, train_g, loss_d, loss_g, generated_images
-
  
     def _loss(self, Dx, Dg, y, generated_y):
         '''
@@ -51,6 +53,10 @@ class Model:
         loss_gan = tf.reduce_mean(-tf.log(Dg + e))
         loss_L1 = tf.reduce_mean(tf.abs(y - generated_y))
         loss_g = A.weight_gan_loss * loss_gan + A.weight_L1_loss * loss_L1
+
+        # name both tensors
+        loss_d = tf.identity(loss_d, name='loss_d')
+        loss_g = tf.identity(loss_g, name='loss_g')
 
         return (loss_d, loss_g)
 

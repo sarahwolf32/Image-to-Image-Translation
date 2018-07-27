@@ -4,7 +4,7 @@ from architecture import Architecture as A
 
 class Discriminator():
 
-    def score_patches(self, input_images, output_images, resuse=False):
+    def score_patches(self, input_images, output_images, reuse=False):
         '''
         A PatchGAN discriminator. 
         Uses a convolutional net to create a 30x30 array of outputs X, where:
@@ -15,7 +15,7 @@ class Discriminator():
         @returns: [batch_size, 30, 30, 1] with all values in range [0,1]
         '''
 
-        with tf.variable_scope('discriminator', reuse=resuse):
+        with tf.variable_scope('discriminator', reuse=reuse):
 
             # concatenate the channels of the generated and ground truth output images
             layer = tf.concat([input_images, output_images], axis=3)

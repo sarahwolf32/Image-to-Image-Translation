@@ -17,6 +17,7 @@ class Generator:
             encoder_layers, encoder_layer_channels = self._encoder(images)
             decoder_layers = self._decoder(encoder_layers, encoder_layer_channels)
             output = decoder_layers[-1]
+            output = tf.identity(output, name='generated_images')
             return output
 
 
