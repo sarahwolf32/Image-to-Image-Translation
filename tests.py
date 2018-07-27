@@ -53,7 +53,7 @@ class Tests(unittest.TestCase):
 
         # create dataset
         D = DataLoader(images_dir, batch_size)
-        dataset = D._load_images()
+        dataset = D.load_images()
         iterator = dataset.make_one_shot_iterator()
         next_batch = iterator.get_next()
 
@@ -61,11 +61,6 @@ class Tests(unittest.TestCase):
         with tf.Session() as sess:
             images = sess.run(next_batch)
             self.assertEqual(images.shape, (batch_size, h, w, channels))
-
-
-
-
-
 
 
 
