@@ -4,20 +4,15 @@ from data_loader import DataLoader
 from model import Model
 from train_ops import TrainOps
 from architecture import Architecture as A
+import argparse
 
-
-
-def train():
-
-    num_epochs = 2
-    images_dir = 'flower-sketches'
-    batch_size = 10
+def train(config):
 
     # initialize model
     Model()
 
     # get dataset
-    loader = DataLoader(images_dir, batch_size)
+    loader = DataLoader(config)
     dataset = loader.load_images()
     init = tf.global_variables_initializer()
 
@@ -28,7 +23,7 @@ def train():
         ops = TrainOps(sess.graph)
 
         # loop through epochs
-        for epoch in range(num_epochs):
+        for epoch in range(config.num_epochs):
 
             print("epoch: " + str(epoch))
             iterator = dataset.make_one_shot_iterator()     
@@ -56,8 +51,17 @@ def train():
 
 
 # MAIN
+if __name__=='__main__':
 
-train()
+    # unwrap config
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data-dir', default='flower-sketches')
+    parser.add_argument('--num-epochs', type=int, default=2)
+    parser.add_argument('--batch-size', type=int, default=10)
+    config = parser.parse_args()
+
+    # train
+    train(config)
 
 
 

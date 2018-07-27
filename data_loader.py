@@ -9,9 +9,9 @@ class DataLoader:
     Assumes the images are jpegs.
     '''
 
-    def __init__(self, images_dir, batch_size):
-        self.images_dir = images_dir
-        self.batch_size = batch_size
+    def __init__(self, config):
+        self.images_dir = config.data_dir
+        self.batch_size = config.batch_size
 
     def load_images(self):
 
