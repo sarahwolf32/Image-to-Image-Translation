@@ -8,6 +8,7 @@ class Model:
 
     def __init__(self):
         self._create()
+        self._create_training_counters()
 
     def _create(self):
 
@@ -35,6 +36,15 @@ class Model:
         train_g = optimizer_g.minimize(loss_g, var_list=g_vars, name='train_g')
         train_d = optimizer_d.minimize(loss_d, var_list=d_vars, name='train_d')
 
+        # prepare summaries
+        loss_d_summary_op = tf.summary.scalar('Discriminator_Loss', loss_d)
+        loss_g_summary_op = tf.summary.scalar('Generator_Loss', loss_g)
+        images_summary_op = tf.summary.image('Generated_Image', generated_images, max_outputs=1)
+        summary_op = tf.summary.merge_all()
+
+    def _create_training_counters(self):
+        global_step_var = tf.Variable(0, name='global_step')
+        epoch_var = tf.Variable(0, name='epoch')
  
     def _loss(self, Dx, Dg, y, generated_y):
         '''
