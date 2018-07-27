@@ -20,7 +20,7 @@ def train(config):
 
     with tf.Session() as sess:
 
-        # get train ops
+        # prepare train ops
         sess.run(init)
         ops = TrainOps(sess.graph)
         logger = Logger(config, sess, ops)
@@ -54,7 +54,6 @@ def train(config):
 
 
 
-
 # MAIN
 if __name__=='__main__':
 
@@ -64,6 +63,7 @@ if __name__=='__main__':
     parser.add_argument('--num-epochs', type=int, default=5)
     parser.add_argument('--batch-size', type=int, default=10)
     parser.add_argument('--summary-dir', default='summary')
+    parser.add_argument('--log-freq', type=int, default=1)
     config = parser.parse_args()
 
     # train
