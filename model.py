@@ -12,8 +12,8 @@ class Model:
     def _create(self):
 
         # placeholders for training data
-        x_images_holder = tf.placeholder(tf.float32, shape=[None, A.img_size, A.img_size, A.input_channels])
-        y_images_holder = tf.placeholder(tf.float32, shape=[None, A.img_size, A.img_size, A.output_channels])
+        x_images_holder = tf.placeholder(tf.float32, shape=[None, A.img_size, A.img_size, A.input_channels], name='x_images_holder')
+        y_images_holder = tf.placeholder(tf.float32, shape=[None, A.img_size, A.img_size, A.output_channels], name='y_images_holder')
 
         # forward pass
         G = Generator()
