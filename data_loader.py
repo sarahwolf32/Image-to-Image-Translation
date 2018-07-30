@@ -9,14 +9,10 @@ class DataLoader:
     Assumes the images are jpegs.
     '''
 
-    def __init__(self, config):
-        self.images_dir = config.data_dir
-        self.batch_size = config.batch_size
-
-    def load_images(self):
+    def load_images(self, images_dir, batch_size=None):
 
         # make a Dataset of all filenames
-        file_pattern = self.images_dir + "/*.jpeg"
+        file_pattern = images_dir + "/*.jpeg"
         filename_dataset = tf.data.Dataset.list_files(file_pattern)
         
         # convert dataset to image tensors
@@ -26,7 +22,8 @@ class DataLoader:
         dataset = dataset.map(lambda x: self._shift_and_scale(x))
 
         # mini-batches
-        dataset = dataset.batch(self.batch_size)
+        if batch_size:
+            dataset = dataset.batch(batch_size)
 
         return dataset
 

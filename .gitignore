@@ -1,2 +1,6 @@
 *.pyc
 flower-sketches
+input_images
+samples
+summary
+checkpoints
