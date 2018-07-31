@@ -25,10 +25,12 @@ class Logger:
             self.writer.add_summary(summary, global_step=global_step)
 
         # print
-        loss_g, loss_d = self.sess.run([self.ops.loss_g, self.ops.loss_d], feed_dict=feed_dict)
+        loss_g, loss_d, prob_x, prob_g = self.sess.run([self.ops.loss_g, self.ops.loss_d, self.ops.prob_x, self.ops.prob_g], feed_dict=feed_dict)
         print("step: " + str(global_step))
         print("loss_g: " + str(loss_g))
         print("loss_d: " + str(loss_d))
+        print("prob_real_x: " + str(prob_x))
+        print("prob_real_g: " + str(prob_g))
         
     def checkpoint(self, feed_dict):
 

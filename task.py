@@ -69,9 +69,6 @@ def continue_training(config):
     train(sess, dataset, config)
 
 def sample(config):
-    print("Going to sample!")
-
-    # restore the session
     sess = load_session(config)
     sampler = Sampler()
     sampler.sample(config.translate_image_dir, config.sample_dir, sess)
@@ -91,9 +88,9 @@ if __name__=='__main__':
 
     # training settings
     parser.add_argument('--num-epochs', type=int, default=5)
-    parser.add_argument('--batch-size', type=int, default=10)
+    parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--log-freq', type=int, default=1)
-    parser.add_argument('--checkpoint-freq', type=int, default=1)
+    parser.add_argument('--checkpoint-freq', type=int, default=50)
     parser.add_argument('--continue-train', type=bool, default=False)
     parser.add_argument('--translate-image-dir', default=None)
     config = parser.parse_args()

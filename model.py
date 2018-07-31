@@ -22,6 +22,8 @@ class Model:
         generated_images = G.create(x_images_holder)
         Dx = D.score_patches(x_images_holder, y_images_holder)
         Dg = D.score_patches(x_images_holder, generated_images, reuse=True)
+        prob_x = tf.reduce_mean(Dx, name='prob_x')
+        prob_g = tf.reduce_mean(Dg, name='prob_g')
         
         # compute losses
         loss_d, loss_g = self._loss(Dx, Dg, y_images_holder, generated_images)
@@ -42,6 +44,8 @@ class Model:
         images_summary_op = tf.summary.image('Generated_Image', generated_images, max_outputs=1)
         x_summary_op = tf.summary.image('X_Image', x_images_holder, max_outputs=1)
         y_summary_op = tf.summary.image('Y_Image', y_images_holder, max_outputs=1)
+        dx_summary_op = tf.summary.scalar('prob_x', prob_x)
+        dg_summary_op = tf.summary.scalar('prob_g', prob_g)
         summary_op = tf.summary.merge_all()
 
     def _create_training_counters(self):

@@ -15,6 +15,8 @@ class TrainOps:
         self.loss_d = graph.get_tensor_by_name('loss_d:0')
         self.loss_g = graph.get_tensor_by_name('loss_g:0')
         self.generated_images = graph.get_tensor_by_name('generator/generated_images:0')
+        self.prob_x = graph.get_tensor_by_name('prob_x:0')
+        self.prob_g = graph.get_tensor_by_name('prob_g:0')
 
         # counters
         self.epoch = graph.get_tensor_by_name('epoch:0')
