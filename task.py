@@ -27,8 +27,7 @@ def train(sess, dataset, config):
 
                 # get mini-batch 
                 batch = sess.run(batch_var)
-                x_images = batch[:, :, :A.img_size, :]
-                y_images = batch[:, :, A.img_size:, :]
+                x_images, y_images = DataLoader().split_images(batch)
                 
                 # train
                 feed_dict = {ops.x_images_holder: x_images, ops.y_images_holder: y_images}

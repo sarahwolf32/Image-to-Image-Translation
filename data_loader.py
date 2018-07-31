@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from architecture import Architecture as A
 
 class DataLoader:
 
@@ -26,6 +27,30 @@ class DataLoader:
             dataset = dataset.batch(batch_size)
 
         return dataset
+
+    def cast_to_channels(self, num_channels, images):
+        channels_axis = 3
+        is_grayscale = (images.shape[channels_axis] == 1)
+        want_grayscale = (num_channels == 1)
+
+        # reduce channels if needed
+        if not is_grayscale and want_grayscale:
+            images = np.mean(images, axis=channels_axis, keepdims=True)
+            return images
+            
+        # expand channels if needed
+        if is_grayscale and not want_grayscale:
+            images = np.repeat(images, num_channels, axis=channels_axis)
+            return images
+
+        return images
+
+    def split_images(self, combined_images):
+        x_images = combined_images[:, :, :A.img_size, :]
+        y_images = combined_images[:, :, A.img_size:, :]
+        x_images = self.cast_to_channels(A.input_channels, x_images)
+        y_images = self.cast_to_channels(A.output_channels, y_images)
+        return (x_images, y_images)
 
 
     # HELPERS

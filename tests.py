@@ -52,8 +52,8 @@ class Tests(unittest.TestCase):
         channels = 3
 
         # create dataset
-        D = DataLoader(images_dir, batch_size)
-        dataset = D.load_images()
+        D = DataLoader()
+        dataset = D.load_images(images_dir, batch_size)
         iterator = dataset.make_one_shot_iterator()
         next_batch = iterator.get_next()
 
@@ -61,6 +61,29 @@ class Tests(unittest.TestCase):
         with tf.Session() as sess:
             images = sess.run(next_batch)
             self.assertEqual(images.shape, (batch_size, h, w, channels))
+
+    def test_cast_to_channels(self):
+        D = DataLoader()
+
+        # cast grayscale to color
+        images = np.random.rand(5, 256, 256, 1)
+        fixed_images = D.cast_to_channels(3, images)
+        self.assertEqual(fixed_images.shape, (5, 256, 256, 3))
+
+        # cast color to grayscale
+        images = np.random.rand(5, 256, 256, 3)
+        fixed_images = D.cast_to_channels(1, images)
+        self.assertEqual(fixed_images.shape, (5, 256, 256, 1))
+
+        # keep shape (color)
+        images = np.random.rand(5, 256, 256, 3)
+        fixed_images = D.cast_to_channels(3, images)
+        self.assertEqual(fixed_images.shape, (5, 256, 256, 3))
+
+        # keep shape (grayscale)
+        images = np.random.rand(5, 256, 256, 1)
+        fixed_images = D.cast_to_channels(1, images)
+        self.assertEqual(fixed_images.shape, (5, 256, 256, 1))
 
 
 
