@@ -26,7 +26,7 @@ class Model:
         prob_g = tf.reduce_mean(Dg, name='prob_g')
         
         # compute losses
-        loss_d, loss_g = self._loss(Dx, Dg, y_images_holder, generated_images)
+        loss_d, loss_g, loss_L1 = self._loss(Dx, Dg, y_images_holder, generated_images)
 
         # optimizers
         optimizer_g = tf.train.AdamOptimizer(learning_rate=0.0002, beta1=0.5)
@@ -46,6 +46,7 @@ class Model:
         y_summary_op = tf.summary.image('Y_Image', y_images_holder, max_outputs=1)
         dx_summary_op = tf.summary.scalar('prob_x', prob_x)
         dg_summary_op = tf.summary.scalar('prob_g', prob_g)
+        l1_summary_op = tf.summary.scalar('loss_L1', loss_L1)
         summary_op = tf.summary.merge_all()
 
     def _create_training_counters(self):
@@ -67,14 +68,14 @@ class Model:
 
         # generator loss
         loss_gan = tf.reduce_mean(-tf.log(Dg + e))
-        loss_L1 = tf.reduce_mean(tf.abs(y - generated_y))
+        loss_L1 = tf.reduce_mean(tf.abs(y - generated_y), name='loss_L1')
         loss_g = A.weight_gan_loss * loss_gan + A.weight_L1_loss * loss_L1
 
         # name both tensors
         loss_d = tf.identity(loss_d, name='loss_d')
         loss_g = tf.identity(loss_g, name='loss_g')
 
-        return (loss_d, loss_g)
+        return (loss_d, loss_g, loss_L1)
 
     
 
