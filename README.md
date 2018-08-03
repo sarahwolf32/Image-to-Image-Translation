@@ -27,7 +27,7 @@ Loss_g = L1_loss (high level features) + GAN_loss (style/texture)
 
 Restricted to only capture low-level features (like texture and style).
 
-PatchGAN
+* PatchGAN
     * Tries to classify if each NxN portion of an image is real or fake
     * Averages the output probabilities for all patches to produce one number
     * We use N = 70
@@ -35,7 +35,7 @@ PatchGAN
 
 ### Expected Behavior
 
-By default, we heavily weight toward L1_loss, by a factor of 100. 
+* By default, we heavily weight toward L1_loss, by a factor of 100. 
     * So, we would expect L1 to dominate training until it is nearly optimized.
     * Then, the GAN factor would take over.
     * The Discriminator quickly trains, is this going to be a problem?

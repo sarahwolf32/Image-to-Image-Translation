@@ -86,10 +86,10 @@ if __name__=='__main__':
     parser.add_argument('--sample-dir', default='samples')
 
     # training settings
-    parser.add_argument('--num-epochs', type=int, default=5)
-    parser.add_argument('--batch-size', type=int, default=1)
-    parser.add_argument('--log-freq', type=int, default=1)
-    parser.add_argument('--checkpoint-freq', type=int, default=50)
+    parser.add_argument('--num-epochs', type=int, default=3)
+    parser.add_argument('--batch-size', type=int, default=128)
+    parser.add_argument('--log-freq', type=int, default=10)
+    parser.add_argument('--checkpoint-freq', type=int, default=100)
     parser.add_argument('--continue-train', type=bool, default=False)
     parser.add_argument('--translate-image-dir', default=None)
     config = parser.parse_args()
