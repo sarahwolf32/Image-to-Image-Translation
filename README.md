@@ -43,9 +43,11 @@ The discriminator is trained with a typical GAN discriminator loss, with which i
 
 ## Train Your Own
 
+#### Start Training
+
 To train your own model using this code:
 
-1. Format your training data as a folder of [x|y] images, each of size [img_size, 2 * img_size]. By default, the code expects an image size of 256, but this can be changed in the ```architecture.py``` file. Just be sure to keep the size a power of two, and be aware that larger images require a larger generator and longer training times.
+1. Format your training data as a folder of [x|y] images, each of size [img_size, 2 * img_size]. By default, the code expects square images of size 256 on each side, but this can be changed in the ```architecture.py``` file. Just be sure to keep the size a power of two, and be aware that larger images require a larger generator and longer training times.
 
 2. Download this code and navigate into the project directory. 
 
@@ -57,7 +59,13 @@ Event files will be saved at regular intervals to the ```summary``` folder, so y
 
 Hyperparameters are set to reasonable defaults, but you can change them via command-line arguments (```--num-epochs, --batch-size```) and in ```architecture.py``` (img_size, input_channels, output_channels, max number of channels, dropout probs, and the <b>α</b> and <b>β</b> weights for the generator loss).
 
+#### Continue Training
 
+If you need to stop and restart training, but don't want to lose your progress, just run ```python -m trainer.task --continue-train True --checkpoint-dir [PATH_TO_CHECKPOINT_FILES]```.
+
+#### Sample
+
+To use your trained model to translate images, you will need a folder of input images x. Then, run ```python -m trainer.task --translate-image-dir [PATH_TO_INPUT_IMAGES] --sample-dir [WHERE_TO_SAVE_OUTPUT_IMAGES]```.
 
 ## Acknowledgements
 
