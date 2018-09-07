@@ -47,7 +47,7 @@ The discriminator is trained with a typical GAN discriminator loss, with which i
 
 To train your own model using this code:
 
-1. Format your training data as a folder of [x|y] images, each of size [img_size, 2 * img_size]. By default, the code expects square images of size 256 on each side, but this can be changed in the ```architecture.py``` file. Just be sure to keep the size a power of two, and be aware that larger images require a larger generator and longer training times.
+1. Format your training data as a folder of [x|y] images, where each has the shape [img_size, 2 * img_size]. By default, the code expects an ```img_size``` of 256, but this can be changed in the ```architecture.py``` file. Just be sure to keep the size a power of two, and be aware that larger images require a larger generator and longer training times.
 
 2. Download this code and navigate into the project directory. 
 
