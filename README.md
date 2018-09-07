@@ -6,7 +6,7 @@ This paper showed that conditional generative adversarial networks (cGANs) are b
 
 While there had previously existed specific solutions taylored to many of these problems, a generic framework that can handle all of them is clearly of great value.  
 
-## Generator Architecture
+## Generator Architecture: U-Net 
 
 All image-to-image translation problems require the "high-level" features (what is it an image of?) to stay the same, and the surface-level features (how it looks) to change. 
 
@@ -21,9 +21,11 @@ The resulting architecture is called a "U-Net":
 <figcaption>* This image is taken from the paper.</figcaption>
 </figure>
 
-## Discriminator Architecture
+### Discriminator Architecture: PatchGAN
 
-PatchGAN.
+Generally, GANs use a discriminator as an adaptive loss function. This paper uses a discriminator network for <i>one part</i> of the loss function, designed to capture surface level features.  
+
+Since these "texture-like" features do not need to encapsulate the entire image's high-level contents, it is sufficient to evaluate smaller patches of the image. This is both more computationally efficient and allows the discriminator to evaluate arbitrarily large images. This "PatchGAN", as it is called, is fed 70x70 patches of an image, and outputs the probability of each being "real" (as opposed to generated). 
 
 ## Loss Functions
 
