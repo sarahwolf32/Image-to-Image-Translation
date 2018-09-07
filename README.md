@@ -29,11 +29,10 @@ Since these "texture-like" features do not need to encapsulate the entire image'
 
 ## Loss Functions
 
-The loss function for training the generator uses both an L1-loss component (for high level features), and a PatchGAN component (for style/texture features). The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. We weight the relative influence of the L1 and GAN loss with the hyperparameters <b>α</b> and <b>β</b>.
+The loss function for training the generator uses both an L1 loss component (for high level features), and a PatchGAN component (for style/texture features). The PatchGAN loss trains the generator to maximize D(G(x)), the probability the discriminator assigns a given <i>generated</i> image patch of being real. On the other hand, the L1 loss trains the generator to produce output pixels as similar to the corresponding pixels in the real image as possible. The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. We weight the relative influence of the L1 and GAN loss with the hyperparameters <b>α</b> and <b>β</b>.
 
-<img height='80' src='readme_images/L1_loss.png'/>
+<img height='80' src='readme_images/L1_loss_fixed.png'/>
 <img height='80' src='readme_images/GAN_loss.png'/>
-
 <img height='25' src='readme_images/G_loss2.png'/>
 
 The discriminator is trained with a typical GAN discriminator loss, in which it attempts to maximize D(y), the probability output for real images, and minimize D(G(x)), the probability output for generated images.
