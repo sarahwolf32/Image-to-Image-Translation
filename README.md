@@ -21,7 +21,7 @@ The resulting architecture is called a "U-Net":
 <figcaption>* This image is taken from the paper.</figcaption>
 </figure>
 
-### Discriminator Architecture: PatchGAN
+## Discriminator Architecture: PatchGAN
 
 Generally, GANs use a discriminator as an adaptive loss function. This paper uses a discriminator network for <i>one part</i> of the loss function, designed to capture surface level features.  
 
@@ -29,7 +29,11 @@ Since these "texture-like" features do not need to encapsulate the entire image'
 
 ## Loss Functions
 
+The loss function for training the generator uses both an L1-loss component (for high level features), and a PatchGAN component (for style/texture features). The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. 
+
 Loss_g = L1_loss (high level features) + GAN_loss (style/texture)
+
+<img height='70' src='D_loss.png'/>
 
 ### L1 Loss
 
