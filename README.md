@@ -17,7 +17,7 @@ However, a plain encoder-decoder has some drawbacks. Since all input image infor
 The resulting architecture is called a "U-Net":
 
 <figure>
-<img height='300' src='u-net.png'/>
+<img height='280' src='readme_images/u-net.png'/>
 <figcaption>* This image is taken from the paper.</figcaption>
 </figure>
 
@@ -29,11 +29,15 @@ Since these "texture-like" features do not need to encapsulate the entire image'
 
 ## Loss Functions
 
-The loss function for training the generator uses both an L1-loss component (for high level features), and a PatchGAN component (for style/texture features). The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. 
+The loss function for training the generator uses both an L1-loss component (for high level features), and a PatchGAN component (for style/texture features). The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. We weight the relative influence of the L1 and GAN loss with the hyperparameters <b>α</b> and <b>β</b>.
 
-Loss_g = L1_loss (high level features) + GAN_loss (style/texture)
+<img height='80' src='readme_images/L1_loss.png'/>
+<img height='80' src='readme_images/GAN_loss.png'/>
+<img height='80' src='readme_images/G_loss.png'/>
 
-<img height='70' src='D_loss.png'/>
+The discriminator is trained with a typical GAN discriminator loss, in which it attempts to maximize D(y), the probability output for real images, and minimize D(G(x)), the probability output for generated images.
+
+<img height='80' src='readme_images/D_loss.png'/>
 
 ### L1 Loss
 
