@@ -1,12 +1,12 @@
-# Image-to-Image Translation
+# Image-to-Image Translation with Conditional Adversarial Nets
 
-This is a Tensorflow implementation of the paper ['Image-to-Image Translation with Conditional Adversarial Nets'](https://arxiv.org/pdf/1611.07004.pdf) by Isola, et al.
+This is a Tensorflow implementation of ['Image-to-Image Translation with Conditional Adversarial Nets'](https://arxiv.org/pdf/1611.07004.pdf) by Isola, et al. 
 
 This paper showed that conditional generative adversarial networks (cGANs) are broadly applicable in the domain of image-to-image translation. They created a cGAN architecture well-suited to these types of problems, and showed it working well on sketch-to-photo, day-to-night, grayscale-to-color, segmentation-to-photo tasks, and more. 
 
 While there had previously existed specific solutions taylored to many of these problems, a generic framework that can handle all of them is clearly of great value.  
 
-## Generator Architecture: The 'U-Net'
+## Generator Architecture
 
 All image-to-image translation problems require the "high-level" features (what is it an image of?) to stay the same, and the surface-level features (how it looks) to change. 
 
@@ -14,7 +14,7 @@ The need to understand and keep the high level essence of the image is well-suit
 
 However, a plain encoder-decoder has some drawbacks. Since all input image information needs to be passed through a bottleneck, some low level details of interest (e.g., the location of edges) can be lost. To solve this, the authors added "skip connections" between corresponding layers in the encoder and decoder. These connections simply concatenate the output of a given encoder layer to the output of the decoder layer of the same size. 
 
-The resulting architecture is called a "U-Net". 
+The resulting architecture is called a "U-Net":
 
 <img height='200' src='u-net-diagram.png'/>
 
