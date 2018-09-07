@@ -1,6 +1,6 @@
 *.pyc
-flower-sketches
-input_images
+data
+attempts
 samples
 summary
 checkpoints

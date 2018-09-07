@@ -1,10 +1,26 @@
-# pix2pix
+# Image-to-Image Translation
 
-A Tensorflow implementation of the paper 'Image-to-Image Translation with Conditional Adversarial Nets' by Isola, et al.
+This is a Tensorflow implementation of the paper ['Image-to-Image Translation with Conditional Adversarial Nets'](https://arxiv.org/pdf/1611.07004.pdf) by Isola, et al.
 
-## Generator Architecture
+This paper showed that conditional generative adversarial networks (cGANs) are broadly applicable in the domain of image-to-image translation. They created a cGAN architecture well-suited to these types of problems, and showed it working well on sketch-to-photo, day-to-night, grayscale-to-color, segmentation-to-photo tasks, and more. 
 
-U-net, and encoder-decoder with skip connections.
+While there had previously existed specific solutions taylored to many of these problems, a generic framework that can handle all of them is clearly of great value.  
+
+## Generator Architecture: The 'U-Net'
+
+All image-to-image translation problems require the "high-level" features (what is it an image of?) to stay the same, and the surface-level features (how it looks) to change. 
+
+The need to understand and keep the high level essence of the image is well-suited to an <i>encoder-decoder</i> architecture. In this structure, the input image <i>x</i> is fed into the encoder, which makes its feature map smaller and the number of channels bigger at each step until the representation is transformed into a single vector. This vector encapsulates the essential high-level details of the image (e.g., this is a picture of a red flower). This is then fed into the decoder network, which creates an output image. The layer sizes of the decoder exactly mirror those of the encoder.
+
+However, a plain encoder-decoder has some drawbacks. Since all input image information needs to be passed through a bottleneck, some low level details of interest (e.g., the location of edges) can be lost. To solve this, the authors added "skip connections" between corresponding layers in the encoder and decoder. These connections simply concatenate the output of a given encoder layer to the output of the decoder layer of the same size. 
+
+The resulting architecture is called a "U-Net". 
+
+<img height='200' src='u-net-diagram.png'/>
+
+## Discriminator Architecture
+
+PatchGAN.
 
 ## Loss Functions
 

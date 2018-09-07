@@ -80,18 +80,18 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
 
     # filepaths
-    parser.add_argument('--data-dir', default='flower-sketches')
+    parser.add_argument('--data-dir', default='data/facades')
     parser.add_argument('--summary-dir', default='summary')
     parser.add_argument('--checkpoint-dir', default='checkpoints')
     parser.add_argument('--sample-dir', default='samples')
 
     # training settings
-    parser.add_argument('--num-epochs', type=int, default=3)
-    parser.add_argument('--batch-size', type=int, default=128)
-    parser.add_argument('--log-freq', type=int, default=10)
-    parser.add_argument('--checkpoint-freq', type=int, default=100)
+    parser.add_argument('--num-epochs', type=int, default=650)
+    parser.add_argument('--batch-size', type=int, default=16)
+    parser.add_argument('--log-freq', type=int, default=25)
+    parser.add_argument('--checkpoint-freq', type=int, default=50)
     parser.add_argument('--continue-train', type=bool, default=False)
-    parser.add_argument('--translate-image-dir', default=None)
+    parser.add_argument('--translate-image-dir', default='data/facade_x')
     config = parser.parse_args()
 
     # continue training from checkpoint
