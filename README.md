@@ -16,7 +16,10 @@ However, a plain encoder-decoder has some drawbacks. Since all input image infor
 
 The resulting architecture is called a "U-Net":
 
+<figure>
 <img height='300' src='u-net.png'/>
+<figcaption>* This image is taken from the paper.</figcaption>
+</figure>
 
 ## Discriminator Architecture
 
