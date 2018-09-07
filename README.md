@@ -29,15 +29,35 @@ Since these "texture-like" features do not need to encapsulate the entire image'
 
 ## Loss Functions
 
-The loss function for training the generator uses both an L1 loss component (for high level features), and a PatchGAN component (for style/texture features). The PatchGAN loss trains the generator to maximize D(G(x)), the probability the discriminator assigns a given <i>generated</i> image patch of being real. On the other hand, the L1 loss trains the generator to produce output pixels as similar to the corresponding pixels in the real image as possible. The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. We weight the relative influence of the L1 and GAN loss with the hyperparameters <b>α</b> and <b>β</b>.
+The loss function for training the generator uses both an L1 loss component (for high level features), and a PatchGAN component (for style/texture features). 
+
+The PatchGAN loss trains the generator to maximize D(G(x)), the probability the discriminator assigns a given <i>generated</i> image patch of being real. On the other hand, the L1 loss trains the generator to produce output pixels as similar to the corresponding pixels in the real image as possible. The PatchGAN element is essential, because L1-loss alone tends to average plausible outcomes and create blurry images. We weight the relative influence of the L1 and GAN loss with the hyperparameters <b>α</b> and <b>β</b>.
 
 <img height='80' src='readme_images/L1_loss_fixed.png'/>
 <img height='80' src='readme_images/GAN_loss.png'/>
 <img height='25' src='readme_images/G_loss2.png'/>
 
-The discriminator is trained with a typical GAN discriminator loss, in which it attempts to maximize D(y), the probability output for real images, and minimize D(G(x)), the probability output for generated images.
+The discriminator is trained with a typical GAN discriminator loss, with which it attempts to maximize D(y), the probability output for real images, and minimize D(G(x)), the probability output for generated images.
 
 <img height='80' src='readme_images/D_loss.png'/>
+
+## Train Your Own
+
+To train your own model using this code:
+
+1. Format your training data as a folder of [x|y] images, each of size [img_size, 2 * img_size]. By default, the code expects an image size of 256, but this can be changed in the ```architecture.py``` file. Just be sure to keep the size a power of two, and be aware that larger images require a larger generator and longer training times.
+
+2. Download this code and navigate into the project directory. 
+
+3. To start training, run ```python -m trainer.task --data-dir [PATH_TO_YOUR_DATA]```. 
+
+By default, checkpoints will be saved at regular intervals to the ```checkpoints``` folder. This output location can be configured with the ```--checkpoint-dir``` option. 
+
+Event files will be saved at regular intervals to the ```summary``` folder, so you can view the training progress in Tensorboard. This default location can be altered with the ```--summary-dir``` argument.
+
+Hyperparameters are set to reasonable defaults, but you can change them via command-line arguments (```--num-epochs, --batch-size```) and in ```architecture.py``` (img_size, input_channels, output_channels, max number of channels, dropout probs, and the <b>α</b> and <b>β</b> weights for the generator loss).
+
+
 
 ## Acknowledgements
 

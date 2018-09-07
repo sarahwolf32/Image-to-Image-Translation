@@ -91,7 +91,7 @@ if __name__=='__main__':
     parser.add_argument('--log-freq', type=int, default=25)
     parser.add_argument('--checkpoint-freq', type=int, default=50)
     parser.add_argument('--continue-train', type=bool, default=False)
-    parser.add_argument('--translate-image-dir', default='data/facade_x')
+    parser.add_argument('--translate-image-dir', default=None)
     config = parser.parse_args()
 
     # continue training from checkpoint
