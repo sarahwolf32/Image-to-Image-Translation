@@ -33,7 +33,7 @@ The loss function for training the generator uses both an L1-loss component (for
 
 <img height='80' src='readme_images/L1_loss.png'/>
 <img height='80' src='readme_images/GAN_loss.png'/>
-<img height='80' src='readme_images/G_loss.png'/>
+<img height='80' src='readme_images/Loss_G.png'/>
 
 The discriminator is trained with a typical GAN discriminator loss, in which it attempts to maximize D(y), the probability output for real images, and minimize D(G(x)), the probability output for generated images.
 
